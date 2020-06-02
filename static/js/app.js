@@ -1,6 +1,6 @@
 function getPlots(id) {
     //Read JSON data
-    d3.json('samples.json').then(data =>{
+    d3.json('data/samples.json').then(data =>{
 
         var samples = data.samples.filter(s => s.id.toString() === id)[0];
         
@@ -80,7 +80,7 @@ function getPlots(id) {
 //Create data gather function
 function getDemoInfo(id) {
     //Read the json files
-    d3.json('samples.json').then ((data)=>{
+    d3.json('data/samples.json').then ((data)=>{
         var metadata=data.metadata;
         console.log(metadata)
 
@@ -103,12 +103,14 @@ function getDemoInfo(id) {
 function optionChanged(id) {
     getPlots(id);
     getDemoInfo(id);
+    buildGauge(id);
+
 }
 
 function init() {
     var dropdown = d3.select("#selDataset");
 
-    d3.json("samples.json").then((data)=> {
+    d3.json("data/samples.json").then((data)=> {
         console.log(data)
 
         data.names.forEach(function(name){
@@ -117,6 +119,7 @@ function init() {
 
         getPlots(data.names[0]);
         getDemoInfo(data.names[0]);
+        buildGauge(data.names[0]);
     });
 }
 
